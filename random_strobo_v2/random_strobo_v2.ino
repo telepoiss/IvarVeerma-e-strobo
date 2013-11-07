@@ -13,10 +13,6 @@ http://www.arduino.cc/en/Tutorial/BlinkWithoutDelay
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
-//declare constants
-#define FLASH 10          // sähvatuse kestus (ms)
-#define MIN 10            // minimaalne delay sähvatuste vahel (ms)
-#define MAX 1300           // maksimaalne delay sähvatuste vahel (ms)
 
 int led1 = 10;            // arduino klemmid kus küljes led'id on
 int led2 = 11;
@@ -33,6 +29,12 @@ long random2;              // teine aken genereeritud delay
 long random3;              // kolmas aken genereeritud delay
 long random4;              // ootamatu delay jaoks
 long random5;              // random case
+
+long FLASH = 10;           // sähvatuse kestus (ms)
+long MIN = 10;             // minimaalne delay sähvatuste vahel (ms)
+long MAX = 1300;           // maksimaalne delay sähvatuste vahel (ms)
+
+
 
 
 
@@ -65,6 +67,9 @@ void setup(){
 }
 
 
+
+
+
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 //see osa on programmi korduv osa
@@ -76,24 +81,45 @@ void loop() {
   unsigned long curMillis4 = millis();
   unsigned long curMillis5 = millis();
 
-  
-  
-  
+ 
+////////////////////////////////////////////////// 
+//////// SWTITCH RANDOM CASE /////////////////////
+  if(curMillis5 - prevMillis5 > 10000) {
   Serial.println("RANDOM-CASE");
   Serial.println(random5);
   
   switch (random5) {
   case 1:
-    // statements
+    MIN = 10;
+    MAX = 400;
+    Serial.println("MIN:");
+    Serial.println(MIN);
+    Serial.println("MAX:");
+    Serial.println(MAX);
     break;
   case 2:
-    // statements
+    MIN = 10;
+    MAX = 1500;
+    Serial.println("MIN:");
+    Serial.println(MIN);
+    Serial.println("MAX:");
+    Serial.println(MAX);
+    break;
+  case 3:
+    MIN = 100;
+    MAX = 4000;
+    Serial.println("MIN:");
+    Serial.println(MIN);
+    Serial.println("MAX:");
+    Serial.println(MAX);
     break;
 }
+  prevMillis5 = curMillis5;
+  random5 = random(1,4);
+}  //endif curmillis5
 
-
-  
-    
+//////////////////////////////////////////////////
+//////// RANDOM DELAY ////////////////////////////
    random4 = random(2200, 3000);
    if(curMillis4 - prevMillis4 > 15000) {
     delay(random4);
@@ -102,7 +128,50 @@ void loop() {
     prevMillis4 = curMillis4;
     random4 = 0;
   }
- 
+  
+//////////////////////////////////////////////////  
+//////// FLASH LEDS //////////////////////////////
+  if(curMillis1 - prevMillis1 > random1) {
+    analogWrite(led1, 255); //põleb
+    delay(FLASH);
+    analogWrite(led1, 0); //kustu
+    
+    Serial.println("LED1:");  // for debugging
+    Serial.println(random1);
+    
+    // save the last time you blinked the LED 
+    prevMillis1 = curMillis1;   
+    //uus rändom delay
+    random1 = random(MIN, MAX);
+  }
+  
+    if(curMillis2 - prevMillis2 > random2) {
+    analogWrite(led2, 255); //põleb
+    delay(FLASH);
+    analogWrite(led2, 0); //kustu
+    
+    Serial.println("LED2:");  // for debugging
+    Serial.println(random2);
+    
+    // save the last time you blinked the LED 
+    prevMillis2 = curMillis2;   
+    //uus rändom delay
+    random2 = random(MIN, MAX);
+  }
+  
+    if(curMillis3 - prevMillis3 > random3) {
+    analogWrite(led3, 255); //põleb
+    delay(FLASH);
+    analogWrite(led3, 0); //kustu
+    
+    Serial.println("LED3:");  // for debugging
+    Serial.println(random3);
+    
+    // save the last time you blinked the LED 
+    prevMillis3 = curMillis3;   
+    //uus rändom delay
+    random3 = random(MIN, MAX);
+  } 
 
 
   delay(1); // stabiilsuseks 1ms
