@@ -11,7 +11,8 @@ Paralleelne sõltumatu plinkimine tugineb sellele demole :
 http://www.arduino.cc/en/Tutorial/BlinkWithoutDelay
 */
 
-
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 //declare constants
 #define FLASH 10          // sähvatuse kestus (ms)
 #define MIN 10            // minimaalne delay sähvatuste vahel (ms)
@@ -26,17 +27,26 @@ long prevMillis1 = 0;        // will store last time LED was updated
 long prevMillis2 = 0;
 long prevMillis3 = 0;
 long prevMillis4 = 0;
+long prevMillis5 = 0;
 long random1;              // esimene aken genereeritud delay
 long random2;              // teine aken genereeritud delay
 long random3;              // kolmas aken genereeritud delay
 long random4;              // ootamatu delay jaoks
+long random5;              // random case
 
 
 
-
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 void setup(){
   Serial.begin(9600);
-  randomSeed(analogRead(0));
+  randomSeed(analogRead(0));      // more random due to analogPin voltage fluctuation
+  
+  random1 = random(MIN, MAX);
+  random2 = random(MIN, MAX);
+  random3 = random(MIN, MAX);
+  random4 = random(2200, 3000);  //random delay
+  random5 = random(1,3);         //random case
   
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
@@ -55,59 +65,33 @@ void setup(){
 }
 
 
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 //see osa on programmi korduv osa
 void loop() { 
-  
   
   unsigned long curMillis1 = millis(); 
   unsigned long curMillis2 = millis();
   unsigned long curMillis3 = millis();
   unsigned long curMillis4 = millis();
-  random4 = 0;
+  unsigned long curMillis5 = millis();
+
   
   
   
-  if(curMillis1 - prevMillis1 > random1) {
-    analogWrite(led1, 255); //põleb
-    delay(FLASH);
-    analogWrite(led1, 0); //kustu
-    
-    Serial.println("random1:");  // for debugging
-    Serial.println(random1);
-    
-    // save the last time you blinked the LED 
-    prevMillis1 = curMillis1;   
-    //uus rändom delay
-    random1 = random(MIN, MAX);
-  }
+  Serial.println("RANDOM-CASE");
+  Serial.println(random5);
   
-    if(curMillis2 - prevMillis2 > random2) {
-    analogWrite(led2, 255); //põleb
-    delay(FLASH);
-    analogWrite(led2, 0); //kustu
-    
-    Serial.println("random2:");  // for debugging
-    Serial.println(random2);
-    
-    // save the last time you blinked the LED 
-    prevMillis2 = curMillis2;   
-    //uus rändom delay
-    random2 = random(MIN, MAX);
-  }
-  
-    if(curMillis3 - prevMillis3 > random3) {
-    analogWrite(led3, 255); //põleb
-    delay(FLASH);
-    analogWrite(led3, 0); //kustu
-    
-    Serial.println("random3:");  // for debugging
-    Serial.println(random3);
-    
-    // save the last time you blinked the LED 
-    prevMillis3 = curMillis3;   
-    //uus rändom delay
-    random3 = random(MIN, MAX);
-  }
+  switch (random5) {
+  case 1:
+    // statements
+    break;
+  case 2:
+    // statements
+    break;
+}
+
+
   
     
    random4 = random(2200, 3000);
