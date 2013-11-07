@@ -59,14 +59,7 @@ void setup(){
   analogWrite(led2, 0);
   analogWrite(led3, 0);
   
-  
-//  //genereerime esimesed rändom delay'd
-//  random1 = random(MIN, MAX);
-//  random2 = random(MIN, MAX);
-//  random3 = random(MIN, MAX);
 }
-
-
 
 
 
