@@ -48,7 +48,7 @@ void setup(){
   random2 = random(MIN, MAX);
   random3 = random(MIN, MAX);
   random4 = random(2200, 3000);  //random delay
-  random5 = random(1,3);         //random case
+  random5 = random(1,4);         //random case
   
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
